@@ -1,18 +1,16 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace SubFold
 {
-    class SrtSubtitle : Subtitle
+    public class SrtSubtitle : Subtitle
     {
-        private const string TimestampFormat = "hh\\:mm\\:ss,fff";
+        private const string TimestampFormat = @"hh\:mm\:ss\,fff";
 
-        private const string TimestampSeparatorExpression = "\\s*-*>\\s*";
+        private const string TimestampSeparatorExpression = @"\s*-*>\s*";
 
         public SrtSubtitle(string fileName)
         {

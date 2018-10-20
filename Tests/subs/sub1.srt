@@ -1,0 +1,21 @@
+1
+00:00:00,000 --> 00:00:03,512
+This is a test
+
+2
+00:00:05,100 --> 00:00:09,900
+Hi
+What's happening?
+
+3
+00:00:12,000 --> 00:00:18,000
+Featuring text that's <i>italic</i>
+Innit nice?
+And a third line...
+
+4
+00:00:19,000 --> 00:00:25,123
+Featuring <i>italic</i>
+and <b>bold</b>
+and <u>underlined</u>
+and <b><i>bold italic</i></b>
