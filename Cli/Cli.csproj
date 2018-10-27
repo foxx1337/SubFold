@@ -49,5 +49,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SubFold\SubFold.csproj">
+      <Project>{55ac4c6c-9550-4187-ad29-321b740a4ea5}</Project>
+      <Name>SubFold</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
