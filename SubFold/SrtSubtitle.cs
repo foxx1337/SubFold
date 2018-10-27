@@ -12,26 +12,42 @@ namespace SubFold
 
         private const string TimestampSeparatorExpression = @"\s*-*>\s*";
 
-        public SrtSubtitle(string fileName)
+        private SrtSubtitle()
         {
             Lines = new List<Line>();
+        }
 
-            using (StreamReader reader = new StreamReader(fileName))
+        public SrtSubtitle(string subtitle) : this()
+        {
+            using (StringReader reader = new StringReader(subtitle))
             {
-                while (true)
-                {
-                    Line line = ReadSubtitleLine(reader);
-                    if (line == null)
-                    {
-                        break;
-                    }
-
-                    Lines.Add(line);
-                }
+                FromReader(reader);
             }
         }
 
-        private Line ReadSubtitleLine(StreamReader reader)
+        public SrtSubtitle(FileInfo inputFile) : this()
+        {
+            using (StreamReader reader = new StreamReader(inputFile.FullName))
+            {
+                FromReader(reader);
+            }
+        }
+
+        private void FromReader(TextReader readerInput)
+        {
+            while (true)
+            {
+                Line line = ReadSubtitleLine(readerInput);
+                if (line == null)
+                {
+                    break;
+                }
+
+                Lines.Add(line);
+            }
+        }
+
+        private Line ReadSubtitleLine(TextReader reader)
         {
             string textPosition = ReadFirstNonEmpty(reader);
 
@@ -74,7 +90,7 @@ namespace SubFold
             }
         }
 
-        private string ReadFirstNonEmpty(StreamReader reader)
+        private string ReadFirstNonEmpty(TextReader reader)
         {
             string line = reader.ReadLine();
 
@@ -86,7 +102,7 @@ namespace SubFold
             return line;
         }
 
-        private List<string> ReadUntilEmpty(StreamReader reader)
+        private List<string> ReadUntilEmpty(TextReader reader)
         {
             List<string> result = new List<string>();
 

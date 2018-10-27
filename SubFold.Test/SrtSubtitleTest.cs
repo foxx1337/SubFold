@@ -1,27 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SubFold;
+using System.IO;
+using NUnit.Framework;
 
-namespace Tests
+namespace SubFold.Test
 {
-    [TestClass]
-    public class BasicReading
+    [TestFixture]
+    class SrtSubtitleTest
     {
-        private SrtSubtitle subtitle;
+        private readonly SrtSubtitle _subtitle;
 
-        public BasicReading()
+        public SrtSubtitleTest()
         {
-            subtitle = new SrtSubtitle(@"subs\sub1.srt");
+            _subtitle = new SrtSubtitle(
+                new FileInfo(
+                    Path.Combine(
+                        TestContext.CurrentContext.TestDirectory, @"subs\sub1.srt")));
         }
 
-        [TestMethod]
+        [Test]
         public void TestNumberLines()
         {
-            Assert.AreEqual(4, subtitle.Lines.Count);
+            Assert.AreEqual(4, _subtitle.Lines.Count);
         }
 
-        [TestMethod]
+        [Test]
         public void TestTimestamps()
         {
             (TimeSpan, TimeSpan)[] timeSpans = {
@@ -34,12 +37,12 @@ namespace Tests
             for (int i = 0; i < timeSpans.Length; i++)
             {
                 var (start, stop) = timeSpans[i];
-                Assert.AreEqual(start, subtitle.Lines[i].Start);
-                Assert.AreEqual(stop, subtitle.Lines[i].Stop);
+                Assert.That(_subtitle.Lines[i].Start, Is.EqualTo(start));
+                Assert.That(_subtitle.Lines[i].Stop, Is.EqualTo(stop));
             }
         }
 
-        [TestMethod]
+        [Test]
         public void TestSubContents()
         {
             List<List<string>> lines = new List<List<string>>
@@ -52,12 +55,13 @@ namespace Tests
 
             for (int i = 0; i < lines.Count; i++)
             {
-                Assert.AreEqual(lines[i].Count, subtitle.Lines[i].Text.Count);
+                Assert.That(_subtitle.Lines[i].Text.Count, Is.EqualTo(lines[i].Count));
                 for (int j = 0; j < lines[i].Count; j++)
                 {
-                    Assert.AreEqual(lines[i][j], subtitle.Lines[i].Text[j]);
+                    Assert.That(_subtitle.Lines[i].Text[j], Is.EqualTo(lines[i][j]));
                 }
             }
         }
+
     }
 }
