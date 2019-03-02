@@ -15,7 +15,7 @@ namespace SubFold
     /// </summary>
     public class AssOutput
     {
-        private const string AssFormat = @"h\:mm\:ss\,ff";
+        private const string AssFormat = @"h\:mm\:ss\.ff";
 
         public string Title { get; set; }
 
@@ -92,8 +92,8 @@ namespace SubFold
             foreach (Line line in _subtitle.Lines)
             {
                 string assVersion = line.Text.Select(Ass_ize).Aggregate((accu, currentItem) => accu + @"\n" + currentItem);
-                writer.WriteLine($"Dialogue: 0,{line.Start.ToString(AssFormat)},{line.Stop.ToString(AssFormat)},Default,,0000,{Width / 2},0000,{assVersion}");
-                writer.WriteLine($"Dialogue: 0,{line.Start.ToString(AssFormat)},{line.Stop.ToString(AssFormat)},Default,,{Width / 2},0000,0000,{assVersion}");
+                writer.WriteLine($"Dialogue: 0,{line.Start.ToString(AssFormat)},{line.Stop.ToString(AssFormat)},Default,,0000,{Width / 2 - 1},0000,,{assVersion}");
+                writer.WriteLine($"Dialogue: 0,{line.Start.ToString(AssFormat)},{line.Stop.ToString(AssFormat)},Default,,{Width / 2 - 1},0000,0000,,{assVersion}");
             }
         }
 
